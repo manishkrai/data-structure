@@ -119,6 +119,23 @@ class BinaryTree {
         
         return root;
     }
+    
+    //Print node in range.. inclusive of x and y
+    public void printInRange(Node root, int x, int y) {
+        if(root == null) {
+            return;
+        }
+        
+        if(root.value >= x && root.value <= y) {
+            printInRange(root.left, x, y);
+            System.out.print(root.value + " ");
+            printInRange(root.right, x, y);
+        } else if(root.value >= x) {
+            printInRange(root.left, x, y);
+        } else {
+            printInRange(root.right, x, y);
+        }
+    }
 }
 
 class HelloWorld {
@@ -145,6 +162,8 @@ class HelloWorld {
         bt.deleteNode(root, 6);
         System.out.println("In Order Traversal after delete");
         bt.inorder(root);
+        System.out.println("Range print");
+        bt.printInRange(root, 5,11);
         
     }
 }
