@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class Node {
     int value;
     Node left;
@@ -136,6 +138,31 @@ class BinaryTree {
             printInRange(root.right, x, y);
         }
     }
+    
+    public void rootToLeafPath(Node root, ArrayList<Integer> list) {
+        
+        if(root == null) {
+            return;
+        }
+        
+        list.add(root.value);
+        
+        if(root.left == null && root.right == null) {
+             System.out.println();
+            printPath(list);
+        } else {
+            rootToLeafPath(root.left, list);
+            rootToLeafPath(root.right, list);
+        }
+        
+        list.remove(list.size() -1);
+    }
+    
+    private void printPath(ArrayList<Integer> list) {
+        list.forEach((value) -> {
+            System.out.print(value + "->");
+        });
+    }
 }
 
 class HelloWorld {
@@ -164,6 +191,8 @@ class HelloWorld {
         bt.inorder(root);
         System.out.println("Range print");
         bt.printInRange(root, 5,11);
+        System.out.println("Print paths:");
+        bt.rootToLeafPath(root, new ArrayList<Integer>());
         
     }
 }
