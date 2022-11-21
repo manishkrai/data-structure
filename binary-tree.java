@@ -76,6 +76,49 @@ class BinaryTree {
             return search(root.right, value);
         }
     }
+    
+    public Node findInOrderSuccesser(Node root) {
+        if(root == null){
+            return null;
+        }
+        
+        while(root.left != null){
+            root = root.left;
+        }
+        
+        return root;
+    }
+    
+    public Node deleteNode(Node root, int value) {
+        if(root ==null) {
+            System.out.println("Not Found!");
+            return null;
+        }
+        if(root.value > value) {
+            root.left = this.deleteNode(root.left, value);
+        } else if(root.value < value) {
+            root.right = this.deleteNode(root.right, value);
+        } else { //matching node
+            //case 1. when no left or right child
+            if(root.left == null && root.right == null) {
+                root = null;
+            } //case 2 . Only one child
+            else if(root.left == null) {
+                root = root.right;
+            } else if(root.right == null) {
+                root = root.left;
+            } else { //case 3. if both left and right child available
+             // Next successor is always left most node from right subtree
+              Node nextSuccessor = this.findInOrderSuccesser(root.right);
+              System.out.println("In Order Successor:" + nextSuccessor.value);
+              root.value = nextSuccessor.value;
+              root.right = this.deleteNode(root.right, nextSuccessor.value);
+                
+            }
+        }
+        
+        return root;
+    }
 }
 
 class HelloWorld {
@@ -98,5 +141,10 @@ class HelloWorld {
         bt.postorder(root);
         
         System.out.println("Element Available: " + bt.search(root, 9));
+        
+        bt.deleteNode(root, 6);
+        System.out.println("In Order Traversal after delete");
+        bt.inorder(root);
+        
     }
 }
