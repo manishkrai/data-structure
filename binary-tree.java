@@ -163,6 +163,25 @@ class BinaryTree {
             System.out.print(value + "->");
         });
     }
+    
+    // Full Binary Tree - Every parent node has either two or no childrens
+    public boolean isFullBinaryTree(Node root) {
+        //If tree is empty
+        if(root == null) {
+            return true;
+        }
+        
+        //if no left or right child
+        if(root.left == null && root.right == null) {
+            return true;
+        }
+        
+        if(root.left != null && root.right != null) {
+            return isFullBinaryTree(root.left) && isFullBinaryTree(root.right);
+        }
+        
+        return false;
+    }
 }
 
 class HelloWorld {
@@ -187,12 +206,15 @@ class HelloWorld {
         System.out.println("Element Available: " + bt.search(root, 9));
         
         bt.deleteNode(root, 6);
+        bt.deleteNode(root, 5);
         System.out.println("In Order Traversal after delete");
         bt.inorder(root);
         System.out.println("Range print");
         bt.printInRange(root, 5,11);
         System.out.println("Print paths:");
         bt.rootToLeafPath(root, new ArrayList<Integer>());
+        
+         System.out.println("Full Binary Tree: " + bt.isFullBinaryTree(root));
         
     }
 }
